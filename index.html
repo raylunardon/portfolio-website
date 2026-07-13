@@ -21,115 +21,110 @@
     background:var(--bg);
     color:var(--fg);
     min-height:100vh;
+    min-height:100dvh;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:40px 24px;
     position:relative;
     overflow:hidden;
   }
-  /* subtle grid */
+
+  /* subtle grid — density adapts per device */
   body::before{
     content:"";
-    position:absolute;
-    inset:0;
+    position:absolute;inset:0;
     background-image:
       linear-gradient(var(--line) 1px,transparent 1px),
       linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:120px 120px;
+    background-size:72px 72px;
     mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
     -webkit-mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
     pointer-events:none;
   }
 
-  .wrap{position:relative;z-index:1;max-width:1100px;width:100%;
-    animation:fade 1s ease both;}
-  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .wrap{position:relative;z-index:1;width:100%;animation:fade .9s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-  /* top eyebrow with flanking rules */
   .eyebrow{
-    display:flex;align-items:center;justify-content:center;gap:14px;
-    font-size:13px;letter-spacing:.42em;color:var(--muted);
-    text-transform:uppercase;margin-bottom:34px;padding-left:.42em;
+    display:flex;align-items:center;justify-content:center;
+    text-transform:uppercase;color:var(--muted);
   }
-  .eyebrow::before,.eyebrow::after{
-    content:"";height:1px;width:120px;max-width:22vw;
-    background:rgba(255,255,255,.14);
-  }
+  .eyebrow::before,.eyebrow::after{content:"";height:1px;background:rgba(255,255,255,.14)}
 
   h1{
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:-.015em;
-    line-height:.92;
-    font-size:clamp(48px,13vw,168px);
-    margin:0;
+    font-weight:800;text-transform:uppercase;margin:0;
   }
 
-  .role{
-    margin-top:34px;
-    font-size:clamp(16px,3vw,30px);
-    font-weight:400;
-    color:var(--muted);
-    letter-spacing:.005em;
-  }
-  .role .sep{color:var(--faint);margin:0 .5em}
+  .role{font-weight:400;color:var(--muted)}
+  .role .sep{color:var(--faint)}
 
-  .divider{
-    height:1px;width:min(560px,80%);
-    background:rgba(255,255,255,.12);
-    margin:30px auto 26px;
-  }
+  .divider{height:1px;background:rgba(255,255,255,.12);margin-left:auto;margin-right:auto}
 
-  .status{
-    display:inline-flex;align-items:center;gap:11px;
-    font-size:13px;letter-spacing:.34em;text-transform:uppercase;
-    color:var(--faint);padding-left:.34em;
-  }
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
-    box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:pulse 2.2s infinite;}
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}
-    70%{box-shadow:0 0 0 11px rgba(74,222,128,0)}
-    100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
-  }
-
-  .tags{
-    margin-top:16px;
-    font-size:clamp(11px,1.5vw,14px);
-    letter-spacing:.18em;text-transform:uppercase;
-    color:var(--faint);
-  }
-  .tags .sep{opacity:.6;margin:0 .55em}
-  .tags a{color:var(--muted);text-decoration:none;transition:color .2s ease}
-  .tags a:hover{color:var(--fg)}
+  .email{text-transform:uppercase;color:var(--faint)}
+  .email a{color:var(--muted);text-decoration:none;transition:color .2s ease}
+  .email a:hover{color:var(--fg)}
 
   footer{
-    position:absolute;left:0;right:0;bottom:24px;z-index:1;
-    font-size:12px;letter-spacing:.12em;color:rgba(140,143,150,.6);
-    text-transform:uppercase;
+    position:absolute;left:0;right:0;z-index:1;
+    text-transform:uppercase;color:rgba(140,143,150,.55);
+  }
+  footer .sep{opacity:.6}
+
+  /* ================= MOBILE (base, mobile-first) =================
+     Composizione compatta: gerarchia più raccolta, spazi stretti,
+     il nome domina ma senza schiacciare gli altri elementi. */
+  body{padding:34px 22px}
+  body::before{background-size:64px 64px}
+  .eyebrow{font-size:11px;letter-spacing:.26em;padding-left:.26em;margin-bottom:20px;gap:12px}
+  .eyebrow::before,.eyebrow::after{width:30px}
+  h1{font-size:44px;line-height:.98;letter-spacing:-.005em}
+  .role{margin-top:20px;font-size:15px;letter-spacing:.01em}
+  .role .sep{margin:0 .45em}
+  .divider{width:82%;margin-top:20px;margin-bottom:18px}
+  .email{font-size:10.5px;letter-spacing:.16em}
+  footer{bottom:16px;font-size:9.5px;letter-spacing:.08em;line-height:1.5;padding:0 20px}
+
+  /* ================= TABLET ================= */
+  @media (min-width:700px){
+    body{padding:52px 40px}
+    body::before{background-size:96px 96px}
+    .eyebrow{font-size:13px;letter-spacing:.4em;padding-left:.4em;margin-bottom:30px;gap:16px}
+    .eyebrow::before,.eyebrow::after{width:90px}
+    h1{font-size:96px;line-height:.95;letter-spacing:-.015em}
+    .role{margin-top:32px;font-size:24px}
+    .role .sep{margin:0 .55em}
+    .divider{width:min(520px,72%);margin-top:30px;margin-bottom:26px}
+    .email{font-size:13px;letter-spacing:.26em}
+    footer{bottom:26px;font-size:12px;letter-spacing:.12em}
   }
 
-  @media (max-width:600px){
-    .eyebrow{letter-spacing:.3em}
-    .eyebrow::before,.eyebrow::after{width:44px}
+  /* ================= DESKTOP ================= */
+  @media (min-width:1200px){
+    body{padding:64px}
+    body::before{background-size:120px 120px}
+    .eyebrow{font-size:14px;letter-spacing:.46em;padding-left:.46em;margin-bottom:40px;gap:18px}
+    .eyebrow::before,.eyebrow::after{width:130px}
+    h1{font-size:150px;line-height:.92;letter-spacing:-.022em}
+    .role{margin-top:40px;font-size:30px}
+    .divider{width:min(600px,58%);margin-top:38px;margin-bottom:30px}
+    .email{font-size:14px;letter-spacing:.3em}
+    footer{bottom:30px;font-size:13px;letter-spacing:.14em}
+  }
+
+  /* schermi molto grandi: tetto per non esagerare */
+  @media (min-width:1800px){
+    h1{font-size:176px}
   }
 </style>
 </head>
 <body>
   <main class="wrap">
     <div class="eyebrow">Portfolio</div>
-
     <h1>Ray<br>Lunardon</h1>
-
     <div class="role">Product Designer <span class="sep">·</span> UI/UX Designer</div>
-
     <div class="divider"></div>
-
-    <div class="tags">
-      <a href="mailto:raylunardon@gmail.com">raylunardon@gmail.com</a>
-    </div>
+    <div class="email"><a href="mailto:raylunardon@gmail.com">raylunardon@gmail.com</a></div>
   </main>
 
   <footer>© <span id="y"></span> Ray Lunardon <span class="sep">·</span> Website under construction</footer>

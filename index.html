@@ -20,30 +20,29 @@
     font-family:"Helvetica Neue",Helvetica,Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:var(--bg);
     color:var(--fg);
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
+    min-height:100vh;min-height:100dvh;
+    position:relative;overflow:hidden;
   }
 
   /* subtle grid — density adapts per device */
   body::before{
-    content:"";
-    position:absolute;inset:0;
+    content:"";position:absolute;inset:0;
     background-image:
       linear-gradient(var(--line) 1px,transparent 1px),
       linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:72px 72px;
-    mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
-    -webkit-mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 50% 48%,#000 60%,transparent 100%);
+    -webkit-mask-image:radial-gradient(circle at 50% 48%,#000 60%,transparent 100%);
     pointer-events:none;
   }
 
-  .wrap{position:relative;z-index:1;width:100%;animation:fade .9s ease both}
+  /* the layout container fills the whole viewport and distributes its blocks */
+  .wrap{
+    position:relative;z-index:1;
+    min-height:100vh;min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    animation:fade .9s ease both;
+  }
   @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
   .eyebrow{
@@ -52,82 +51,87 @@
   }
   .eyebrow::before,.eyebrow::after{content:"";height:1px;background:rgba(255,255,255,.14)}
 
-  h1{
-    font-weight:800;text-transform:uppercase;margin:0;
-  }
+  .hero{display:flex;flex-direction:column;align-items:center}
+  h1{font-weight:800;text-transform:uppercase;margin:0}
 
   .role{font-weight:400;color:var(--muted)}
   .role .sep{color:var(--faint)}
 
-  .divider{height:1px;background:rgba(255,255,255,.12);margin-left:auto;margin-right:auto}
-
+  .meta{display:flex;flex-direction:column;align-items:center;width:100%}
+  .divider{height:1px;background:rgba(255,255,255,.12)}
   .email{text-transform:uppercase;color:var(--faint)}
   .email a{color:var(--muted);text-decoration:none;transition:color .2s ease}
   .email a:hover{color:var(--fg)}
 
-  footer{
-    position:absolute;left:0;right:0;z-index:1;
-    text-transform:uppercase;color:rgba(140,143,150,.55);
-  }
+  footer{text-transform:uppercase;color:rgba(140,143,150,.55)}
   footer .sep{opacity:.6}
 
-  /* ================= MOBILE (base, mobile-first) =================
-     Composizione compatta: gerarchia più raccolta, spazi stretti,
-     il nome domina ma senza schiacciare gli altri elementi. */
-  body{padding:34px 22px}
-  body::before{background-size:64px 64px}
-  .eyebrow{font-size:11px;letter-spacing:.26em;padding-left:.26em;margin-bottom:20px;gap:12px}
-  .eyebrow::before,.eyebrow::after{width:30px}
-  h1{font-size:44px;line-height:.98;letter-spacing:-.005em}
-  .role{margin-top:20px;font-size:15px;letter-spacing:.01em}
+  /* ===================== MOBILE (base) =====================
+     I blocchi si distribuiscono su tutta l'altezza dello schermo:
+     eyebrow in alto, nome centrale, contatto in basso, footer a fondo. */
+  .wrap{justify-content:space-between;padding:7vh 22px 4vh}
+  .eyebrow{font-size:11px;letter-spacing:.28em;padding-left:.28em;gap:12px}
+  .eyebrow::before,.eyebrow::after{width:32px}
+  .hero{flex:1;justify-content:center;margin:3vh 0}
+  h1{font-size:47px;line-height:.98;letter-spacing:-.005em}
+  .role{margin-top:22px;font-size:15px;letter-spacing:.01em}
   .role .sep{margin:0 .45em}
-  .divider{width:82%;margin-top:20px;margin-bottom:18px}
+  .divider{width:82%;max-width:300px;margin:0 auto 20px}
   .email{font-size:10.5px;letter-spacing:.16em}
-  footer{bottom:16px;font-size:9.5px;letter-spacing:.08em;line-height:1.5;padding:0 20px}
+  .meta{margin-bottom:1vh}
+  footer{font-size:9.5px;letter-spacing:.08em;line-height:1.5;margin-top:3vh}
 
-  /* ================= TABLET ================= */
+  /* ===================== TABLET / DESKTOP =====================
+     Torniamo alla composizione centrata (blocco unico al centro),
+     con il footer ancorato in basso. */
   @media (min-width:700px){
-    body{padding:52px 40px}
+    .wrap{justify-content:center;padding:52px 40px}
     body::before{background-size:96px 96px}
-    .eyebrow{font-size:13px;letter-spacing:.4em;padding-left:.4em;margin-bottom:30px;gap:16px}
+    .eyebrow{font-size:13px;letter-spacing:.4em;padding-left:.4em;gap:16px;margin-bottom:30px}
     .eyebrow::before,.eyebrow::after{width:90px}
+    .hero{flex:0 1 auto;margin:0}
     h1{font-size:96px;line-height:.95;letter-spacing:-.015em}
     .role{margin-top:32px;font-size:24px}
     .role .sep{margin:0 .55em}
-    .divider{width:min(520px,72%);margin-top:30px;margin-bottom:26px}
+    .meta{margin-top:30px;margin-bottom:0;width:auto}
+    .divider{width:min(520px,60vw);max-width:none;margin:0 auto 26px}
     .email{font-size:13px;letter-spacing:.26em}
-    footer{bottom:26px;font-size:12px;letter-spacing:.12em}
+    footer{position:absolute;left:0;right:0;bottom:26px;font-size:12px;letter-spacing:.12em;margin-top:0}
   }
 
-  /* ================= DESKTOP ================= */
   @media (min-width:1200px){
-    body{padding:64px}
+    .wrap{padding:64px}
     body::before{background-size:120px 120px}
-    .eyebrow{font-size:14px;letter-spacing:.46em;padding-left:.46em;margin-bottom:40px;gap:18px}
+    .eyebrow{font-size:14px;letter-spacing:.46em;padding-left:.46em;gap:18px;margin-bottom:40px}
     .eyebrow::before,.eyebrow::after{width:130px}
     h1{font-size:150px;line-height:.92;letter-spacing:-.022em}
     .role{margin-top:40px;font-size:30px}
-    .divider{width:min(600px,58%);margin-top:38px;margin-bottom:30px}
+    .meta{margin-top:38px}
+    .divider{width:min(600px,44vw);margin:0 auto 30px}
     .email{font-size:14px;letter-spacing:.3em}
     footer{bottom:30px;font-size:13px;letter-spacing:.14em}
   }
 
-  /* schermi molto grandi: tetto per non esagerare */
-  @media (min-width:1800px){
-    h1{font-size:176px}
-  }
+  @media (min-width:1800px){ h1{font-size:176px} }
 </style>
 </head>
 <body>
   <main class="wrap">
     <div class="eyebrow">Portfolio</div>
-    <h1>Ray<br>Lunardon</h1>
-    <div class="role">Product Designer <span class="sep">·</span> UI/UX Designer</div>
-    <div class="divider"></div>
-    <div class="email"><a href="mailto:raylunardon@gmail.com">raylunardon@gmail.com</a></div>
+
+    <div class="hero">
+      <h1>Ray<br>Lunardon</h1>
+      <div class="role">Product Designer <span class="sep">·</span> UI/UX Designer</div>
+    </div>
+
+    <div class="meta">
+      <div class="divider"></div>
+      <div class="email"><a href="mailto:raylunardon@gmail.com">raylunardon@gmail.com</a></div>
+    </div>
+
+    <footer>© <span id="y"></span> Ray Lunardon <span class="sep">·</span> Website under construction</footer>
   </main>
 
-  <footer>© <span id="y"></span> Ray Lunardon <span class="sep">·</span> Website under construction</footer>
   <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
 
   <!-- Cloudflare Web Analytics -->

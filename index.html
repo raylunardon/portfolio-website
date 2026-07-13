@@ -124,14 +124,22 @@
       <div class="role">Product Designer <span class="sep">·</span> UI/UX Designer</div>
       <div class="meta">
         <div class="divider"></div>
-        <div class="email"><a href="mailto:raylunardon@gmail.com">raylunardon@gmail.com</a></div>
+        <div class="email"><a class="mail" data-u="raylunardon" data-d="gmail.com" href="#">scrivimi</a></div>
       </div>
     </div>
 
     <footer>© <span id="y"></span> Ray Lunardon <span class="sep">·</span> Website under construction</footer>
   </main>
 
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('y').textContent=new Date().getFullYear();
+    // Offuscamento email: l'indirizzo non compare mai in chiaro nel sorgente
+    document.querySelectorAll('.mail').forEach(function(a){
+      var e = a.getAttribute('data-u') + String.fromCharCode(64) + a.getAttribute('data-d');
+      a.href = 'mailto:' + e;
+      a.textContent = e;
+    });
+  </script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "077b7ab6621544ed81caeea54794ed07"}'></script>
